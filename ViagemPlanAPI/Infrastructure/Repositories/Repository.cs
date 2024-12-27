@@ -1,31 +1,46 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
-using ViagemPlanAPI.Context;
-using ViagemPlanAPI.Infrastructure.Repositories.Interfaces;
+using ViagemPlanAPI.Infrastructure.Persistence;
+using ViagemPlanLibrary.Domain.Interfaces;
 
 namespace ViagemPlanAPI.Infrastructure.Repositories;
 
 public class Repository<T> : IRepository<T> where T : class
 {
-    protected readonly ViagemPlanDbContext _context;
-
-    public Repository(ViagemPlanDbContext context)
+    private readonly DbSet<T> _dbSet;
+    public Repository(ViagemPlanDbContext dbContex)
     {
-        _context = context;
+        _dbSet = dbContex.Set<T>();
     }
 
     public async Task<T?> GetAsync(Expression<Func<T, bool>> predicate)
     {
-        return await _context.Set<T>().FirstOrDefaultAsync(predicate);
+        return await _dbSet.FirstOrDefaultAsync(predicate);
     }
-    public T Create(T entity)
+    public async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>>? predicate = null)
     {
-        _context.Set<T>().Add(entity);
+        return predicate == null
+            ? await _dbSet.ToListAsync()
+            : await _dbSet.Where(predicate).ToListAsync();
+    }
+
+    public async Task<T> AddAsync(T entity)
+    {
+        await _dbSet.AddAsync(entity);
         return entity;
     }
-    public T Update(T entity)
+
+    public T UpdateAsync(T entity)
     {
-        _context.Entry(entity).State = EntityState.Modified;
+        _dbSet.Update(entity);
         return entity;
     }
+
+    public Task DeleteAsync(T entity)
+    {
+        _dbSet.Remove(entity);
+        return Task.CompletedTask;
+    }
+
+  
 }

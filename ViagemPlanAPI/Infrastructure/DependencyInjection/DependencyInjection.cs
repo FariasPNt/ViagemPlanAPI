@@ -10,6 +10,8 @@ public static class DependencyInjection
     {
         services.AddHttpClient<ApiCotacaoRepository>();
         services.AddScoped<ICotacaoRepository, ApiCotacaoRepository>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
         services.AddScoped<CotacaoService>();
 
