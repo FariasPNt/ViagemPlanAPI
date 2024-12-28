@@ -15,6 +15,8 @@ public static class DependencyInjection
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
         services.AddScoped<IReservaService, ReservaService>();
+        services.AddScoped<IAgrupamentoReservaService, AgrupamentoReservaService>();
+        services.AddScoped<IAtividadeService, AtividadeService>();
         services.AddAutoMapper(typeof(ReservaProfile));
 
         services.AddScoped<CotacaoService>();
