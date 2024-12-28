@@ -1,4 +1,6 @@
-﻿using ViagemPlanAPI.Application.Services;
+﻿using ViagemPlanAPI.Application.DTOs.ReservaDTOs;
+using ViagemPlanAPI.Application.Services;
+using ViagemPlanAPI.Application.Services.Interfaces;
 using ViagemPlanAPI.Infrastructure.Repositories;
 using ViagemPlanLibrary.Domain.Interfaces;
 
@@ -12,6 +14,8 @@ public static class DependencyInjection
         services.AddScoped<ICotacaoRepository, ApiCotacaoRepository>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+        services.AddScoped<IReservaService, ReservaService>();
+        services.AddAutoMapper(typeof(ReservaProfile));
 
         services.AddScoped<CotacaoService>();
 
