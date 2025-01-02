@@ -15,6 +15,9 @@ public class Reserva
     public decimal PrecoDiaria { get; set; }
     public Pessoa Pessoa { get; set; }
 
+    public int ViagemId { get; set; }
+    public Viagem Viagem { get; set; }
+
     public int CalcularDiarias()
     {
         var totalDias = (DataFimReserva - DataInicialReserva).Days;

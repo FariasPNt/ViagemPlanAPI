@@ -14,4 +14,16 @@ public class Destino
     public Participantes? Participantes { get; set; }
     public Reserva? Reserva { get; set; }
     public PacoteAtividades? PacoteAtividades { get; set; }
+
+    public decimal CalcularCustoDestino()
+    {
+        var custoReserva = Reserva?.CalcularCustoReserva() ?? 0;
+        var custoAtividades = PacoteAtividades?.CalcularCustoTotalAtividade() ?? 0;
+        return custoReserva + custoAtividades;
+    }
+
+    public override string ToString()
+    {
+        return $"{Cidade}, {Pais} | Custo Total: R$ {CalcularCustoDestino():F2}";
+    }
 }

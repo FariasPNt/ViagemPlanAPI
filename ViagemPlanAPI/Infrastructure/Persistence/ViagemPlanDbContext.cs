@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Runtime.ConstrainedExecution;
 using ViagemPlanLibrary.Domain.Entities;
 
 namespace ViagemPlanAPI.Infrastructure.Persistence;
@@ -19,6 +20,13 @@ public class ViagemPlanDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Reserva>()
+        .HasOne(r => r.Viagem)
+        .WithMany(v => v.AgrupamentoReservas.Reservas) // Ajuste se necessário
+        .HasForeignKey(r => r.ViagemId)
+        .OnDelete(DeleteBehavior.Cascade);
+
+
         base.OnModelCreating(modelBuilder);
 
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ViagemPlanDbContext).Assembly);

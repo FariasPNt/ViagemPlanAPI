@@ -18,7 +18,8 @@ public static class DependencyInjection
         services.AddScoped<IAgrupamentoReservaService, AgrupamentoReservaService>();
         services.AddScoped<IAtividadeService, AtividadeService>();
         services.AddAutoMapper(typeof(ReservaProfile));
-
+        services.AddScoped<IPacoteAtividadesService, PacoteAtividadesService>();
+        services.AddScoped<IDinheiroService, DinheiroService>();
         services.AddScoped<CotacaoService>();
 
         return services;

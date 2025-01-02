@@ -15,8 +15,28 @@ public class Viagem
 
     public decimal CalcularCustoTotalViagem()
     {
-        decimal custoReservas = AgrupamentoReservas.CalcularCustoTotal();
-        decimal custoAtividades = Destinos.Sum(d => d.PacoteAtividades.CalcularCustoTotalAtividade());
-        return custoReservas + custoAtividades;
+        decimal custoReservas = AgrupamentoReservas?.CalcularCustoTotal() ?? 0;
+        decimal custoDestino = Destinos.Sum(d => d.CalcularCustoDestino());
+        return custoReservas + custoDestino;
+    }
+
+    public void AdicionarDestino(Destino destino)
+    {
+        if(destino == null)
+            throw new ArgumentNullException(nameof(destino));
+        Destinos.Add(destino);
+    }
+
+    public void RemoverDestino(Destino destino)
+    {
+        if(destino == null) 
+            throw new ArgumentNullException(nameof(destino));
+        
+        Destinos.Remove(destino);
+    }
+
+    public override string ToString()
+    {
+        return $"{Nome} | Total de Destinos: {Destinos.Count} | Custo Total: R$ {CalcularCustoTotalViagem():F2}";
     }
 }

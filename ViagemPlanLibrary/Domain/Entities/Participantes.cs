@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ViagemPlanLibrary.Domain.Entities
+namespace ViagemPlanLibrary.Domain.Entities;
+
+public class Participantes
 {
-    public class Participantes
-    {
-        public int Id { get; set; }
-        public ICollection<Pessoa> Pessoas { get; set; }
-    }
+    public int Id { get; set; }
+    public ICollection<Pessoa> Pessoas { get; set; }
+
 }
